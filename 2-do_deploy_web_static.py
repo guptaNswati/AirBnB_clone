@@ -2,6 +2,7 @@
 """
 This module contains a Fabric script that distributes an archive to the web
 servers, using the function do_deploy
+Ref: http://www.pixelstech.net/article/1354958138-Using-Fabric-to-deploy-web-app
 """
 from time import strftime
 from fabric.api import *
@@ -19,7 +20,7 @@ def do_deploy(archive_path):
     try:
         path, tar_file = os.path.split(archive_path)
         data_dir = "/data/web_static/releases/"
-        put(archive_path, "/tmp/{}".format(tar_file))
+        put(archive_path, "/tmp/")
         run("sudo mkdir -p {}{}/".format(data_dir, tar_file[:-4]))
         run("sudo tar -xzf /tmp/{} -C {}{}/".format(
             tar_file, data_dir, tar_file[:-4]))
