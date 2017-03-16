@@ -29,8 +29,8 @@ def do_deploy(archive_path):
             data_dir, tar_file[:-4], data_dir, tar_file[:-4]))
         run("sudo rm -rf {}{}/web_static".
             format(data_dir, tar_file[:-4]))
-        run("sudo rm -rf /data/web_server/current")
-        run("sudo ln -s {}{}/ /data/web_server/current".format(
+        run("sudo rm -rf /data/web_static/current")
+        run("sudo ln -s {}{}/ /data/web_static/current".format(
             data_dir, tar_file[:-4]))
         return True
     except:
