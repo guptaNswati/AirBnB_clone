@@ -16,9 +16,13 @@ def do_clean(number=0):
     if num == 0:
         num += 1
     files = local("ls -tr versions", capture=True).split("\n")
-    for file in files[:num]:
-        local("rm -f versions/{}".format(file))
-    files = run("sudo ls -tr /data/web_static/releases",
-                capture=True).split("\n")
-    for file in files[:num]:
-        run("sudo rm -rf /data/web_static/releases/{}".format(file))
+    if len(files) > num:
+        for file in files[:num]:
+            local("rm -f versions/{}".format(file))
+    dir_toclean = ""
+    with cd("/data/web_static/releases"):
+        files = sudo("ls -tr").split("\r\n")
+    files = [file for file in files if "web_static" in file]
+    if len(files) > num:
+        for file in files[:num]:
+            run("sudo rm -rf /data/web_static/releases/{}".format(file))
