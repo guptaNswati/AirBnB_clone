@@ -19,12 +19,11 @@ def do_deploy(archive_path):
     try:
         path, tar_file = os.path.split(archive_path)
         data_dir = "/data/web_static/releases/"
-        with cd("/tmp"):
-            put("{}".format(archive_path), "{}".format(tar_file))
-        run("sudo mkdir -p {}{}".format(data_dir, tar_file[:-4]))
-        run("sudo tar -xzf /tmp/{} -C {}{}".format(
+        put(archive_path, "/tmp/{}".format(tar_file))
+        run("sudo mkdir -p {}{}/".format(data_dir, tar_file[:-4]))
+        run("sudo tar -xzf /tmp/{} -C {}{}/".format(
             tar_file, data_dir, tar_file[:-4]))
-        run("sudo rm -f /tmp/{}".format(tar_file))
+        run("sudo rm /tmp/{}".format(tar_file))
         run("sudo mv {}{}/web_static/* {}{}/".format(
             data_dir, tar_file[:-4], data_dir, tar_file[:-4]))
         run("sudo rm -rf {}{}/web_static".
