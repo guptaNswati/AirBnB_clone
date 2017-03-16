@@ -19,10 +19,12 @@ def do_clean(number=0):
     if len(files) > num:
         for file in files[:num]:
             local("rm -f versions/{}".format(file))
-    dir_toclean = ""
     with cd("/data/web_static/releases"):
-        files = sudo("ls -tr").split("\r\n")
-    files = [file for file in files if "web_static" in file]
-    if len(files) > num:
-        for file in files[:num]:
-            run("sudo rm -rf /data/web_static/releases/{}".format(file))
+        files = sudo("ls -tr").split(" ")
+        files = [file for file in files if file != '']
+        print(files)
+        print(len(files))
+        if len(files) > num:
+            for file in files[:num]:
+                print(file)
+                run("sudo rm -rf {}".format(file))
