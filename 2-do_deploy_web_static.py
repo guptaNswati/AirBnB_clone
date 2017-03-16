@@ -2,7 +2,6 @@
 """
 This module contains a Fabric script that distributes an archive to the web
 servers, using the function do_deploy
-Ref: http://www.pixelstech.net/article/1354958138-Using-Fabric-to-deploy-web-app
 """
 from time import strftime
 from fabric.api import *
