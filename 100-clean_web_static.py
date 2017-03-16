@@ -18,6 +18,7 @@ def do_clean(number=0):
     files = local("ls -tr versions", capture=True).split("\n")
     for file in files[:num]:
         local("rm -f versions/{}".format(file))
-    files = run("sudo ls -tr /data/web_static/releases").split("\n")
+    files = run("sudo ls -tr /data/web_static/releases",
+                capture=True).split("\n")
     for file in files[:num]:
         run("sudo rm -rf /data/web_static/releases/{}".format(file))
