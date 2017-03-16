@@ -18,14 +18,20 @@ def do_deploy(archive_path):
     """
     try:
         path, tar_file = os.path.split(archive_path)
+        data_dir = "/data/web_static/releases/"
         with cd("/tmp"):
             put("{}".format(archive_path), "{}".format(tar_file))
-            run("tar -xzvf {} /data/web_static/releases/{}".format(
-                tar_file, tar_file[:-4]))
-            run("rm -f {}".format(tar_file))
-        run("rm -f /data/web_server/current")
-        run("ln -s  /data/web_static/releases/{} /data/web_server/current".
-            format(tar_file[:-4]))
+        run("sudo mkdir -p {}{}".format(data_dir, tar_file[:-4]))
+        run("sudo tar -xzf /tmp/{} -C {}{}".format(
+            tar_file, data_dir, tar_file[:-4]))
+        run("sudo rm -f /tmp/{}".format(tar_file))
+        run("sudo mv {}{}/web_static/* {}{}/".format(
+            data_dir, tar_file[:-4], data_dir, tar_file[:-4]))
+        run("sudo rm -rf {}{}/web_static".
+            format(data_dir, tar_file[:-4]))
+        run("sudo rm -rf /data/web_server/current")
+        run("sudo ln -s {}{}/ /data/web_server/current".format(
+            data_dir, tar_file[:-4]))
         return True
     except:
         return False
