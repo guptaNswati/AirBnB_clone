@@ -6,6 +6,7 @@ contents of the web_static folder.
 from time import strftime
 from fabric.api import *
 
+
 def do_pack():
     """
     generates a .tgz archive of web_static folder files using fabrics local()
