@@ -11,8 +11,7 @@ def deploy():
     """
     pack and deploy
     """
-    try:
-        do_deploy(do_pack())
-        return True
-    except:
+    archive = do_pack()
+    if archive is None:
         return False
+    return do_deploy(archive)
